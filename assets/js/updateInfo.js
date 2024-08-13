@@ -44,24 +44,27 @@ function updateRaidDetails(data) {
                         const characterName = character[0];
                         const characterJob = character[1];
                         const characterLevel = character[2];
+                        const raidAvailable = character[raids.indexOf(raidName) + 3]; // raidName에 해당하는 index
 
-                        const canAttendHard = hardRequirement && characterLevel >= hardRequirement;
-                        const canAttendNormal = normalRequirement && characterLevel >= normalRequirement;
+                        if (!raidAvailable) { // true로 표시된 항목은 제외
+                            const canAttendHard = hardRequirement && characterLevel >= hardRequirement;
+                            const canAttendNormal = normalRequirement && characterLevel >= normalRequirement;
 
-                        const characterDisplay = `
-                            <img src="images/jobs/${characterJob}.png" alt="${characterJob}" title="${characterName}" style="width: 40px; height: 40px; vertical-align: middle;">
-                        `;
+                            const characterDisplay = `
+                                <img src="images/jobs/${characterJob}.png" alt="${characterJob}" title="${characterName}" style="width: 40px; height: 40px; vertical-align: middle;">
+                            `;
 
-                        if (canAttendHard) {
-                            if (!hardParticipants[user]) {
-                                hardParticipants[user] = [];
+                            if (canAttendHard) {
+                                if (!hardParticipants[user]) {
+                                    hardParticipants[user] = [];
+                                }
+                                hardParticipants[user].push(characterDisplay);
+                            } else if (canAttendNormal) {
+                                if (!normalParticipants[user]) {
+                                    normalParticipants[user] = [];
+                                }
+                                normalParticipants[user].push(characterDisplay);
                             }
-                            hardParticipants[user].push(characterDisplay);
-                        } else if (canAttendNormal) {
-                            if (!normalParticipants[user]) {
-                                normalParticipants[user] = [];
-                            }
-                            normalParticipants[user].push(characterDisplay);
                         }
                     });
                 }
@@ -81,7 +84,7 @@ function updateRaidDetails(data) {
                 // 하드 난이도가 없는 레이드의 경우 하드 정보를 표시하지 않음
                 detailsElement.innerHTML = `
                     <h3>${raidName}</h3>
-                    ${hardRequirement !== null ? `<p><strong class="hard">하드 ${hardCount}</strong></p><p>${hardCharacterList}</p>` : ''}
+                    ${hardRequirement !== null && hardCount > 0 ? `<p><strong class="hard">하드 ${hardCount}</strong></p><p>${hardCharacterList}</p>` : ''}
                     ${normalCount > 0 ? `<p><strong class="normal">노말 ${normalCount}</strong></p><p>${normalCharacterList}</p>` : ''}
                 `;
             }
@@ -89,4 +92,4 @@ function updateRaidDetails(data) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', loadRaidData);
+
