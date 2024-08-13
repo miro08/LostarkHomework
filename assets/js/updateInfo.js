@@ -24,6 +24,7 @@ function updateRaidDetails(data) {
         "아브렐슈드": { hard: 1550, normal: 1540 },
         "쿠크세이튼": { hard: null, normal: 1475 }
     };
+    console.log(data);
 
     const raids = Object.keys(raidRequirements);
 
