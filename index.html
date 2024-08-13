@@ -123,15 +123,9 @@
 		<script src="assets/js/skel.min.js"></script>
 		<script src="assets/js/util.js"></script>
 		<script src="assets/js/main.js"></script>
-		<script src="assets/js/updateInfo.js?timestamp=<%= new Date().getTime() %>"></script>
+		<script src="assets/js/updateInfo.js"></script>
 		<script>
-			const script = document.createElement('script');
-			script.src = `assets/js/updateInfo.js?timestamp=${new Date().getTime()}`;
-			document.head.appendChild(script);
-		
-			script.onload = () => {
-				document.addEventListener('DOMContentLoaded', loadRaidData);
-			};
+			document.addEventListener('DOMContentLoaded', loadRaidData);
 		</script>
 	</body>
 </html>
