@@ -1,6 +1,6 @@
 async function loadRaidData() {
     try {
-        const response = await fetch('assets/data/data.json');
+        const response = await fetch('https://raw.githubusercontent.com/ChangJoEconomy/LostarkHomeworkData/main/data.json');
         if (!response.ok) {
             console.error('Failed to load raid data:', response.statusText);
             return;
